@@ -1,64 +1,30 @@
-<?php echo $this->textInput('a', 'b'); ?>
-
 <form method="post" action="/?weblog/posts/save">
     <fieldset>
         <legend>Dodaj post</legend>
         <dl>
             <dt>Tytuł</dt>
             <dd>
-
-                <input name="title"
-                       type="text"
-                       placeholder="Tytuł"
-                       value="<?php echo $this->post->title; ?>"/>
-
-                <?php if($this->post->is_invalid('title')): ?>
-                <ul>
-                    <?php foreach($this->post->errors->on('title') as $e): ?>
-                    <li><?php echo $e; ?></li>
-                    <?php endforeach;?>
-                </ul>
-                <?php endif; ?>
-                
+                <?php echo $this->textInput('post', 'title'); ?>
+                <?php echo $this->formFieldErrors('post', 'title'); ?>
             </dd>
         </dl>
         <dl>
             <dt>Autor</dt>
             <dd>
 
-                <input name="author"
-                       type="text"
-                       placeholder="Autor"
-                       value="<?php echo $this->post->author; ?>"/>
-
-                <?php if($this->post->is_invalid('author')): ?>
-                <ul>
-                    <?php foreach($this->post->errors->on('author') as $e): ?>
-                    <li><?php echo $e; ?></li>
-                    <?php endforeach; ?>
-                </ul>
-                <?php endif; ?>
-
+                <?php echo $this->textInput('post', 'author'); ?>
+                <?php echo $this->formFieldErrors('post', 'author'); ?>
             </dd>
         </dl>
         <dl>
             <dt>Treść</dt>
             <dd>
-                
-                <textarea name="body"><?php echo $this->post->body; ?></textarea>
-            
-                <?php if($this->post->is_invalid('body')): ?>
-                    <ul>
-                        <?php foreach($this->post->errors->on('body') as $e): ?>
-                        <li><?php echo $e; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-
+                <?php echo $this->textarea('post', 'body'); ?>
+                <?php echo $this->formFieldErrors('post', 'body'); ?>
             </dd>
         </dl>
 
-        <input type="hidden" name="id" value="<?php echo $this->post->id; ?>" />
+        <?php echo $this->hidden('post', 'id'); ?>
         <input type="submit" value="Zapisz" />
     </fieldset>
 </form>

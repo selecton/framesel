@@ -166,7 +166,7 @@ class View
 
         if( \class_exists($fullHelperName) )
         {
-            $helper = new $fullHelperName();
+            $helper = new $fullHelperName($this);
 
             return \call_user_func_array(array($helper, 'direct'), $arguments);
         }

@@ -55,11 +55,12 @@ class Request
         }
 
         $this->_params = \array_merge($this->_params, $_POST);
+        
     }
 
     public function getParam($paramName, $defaultValue = null)
     {
-        if( isset($this->_parama[$paramName]) && !empty($this->_params[$paramName]) )
+        if( isset($this->_params[$paramName]) && !empty($this->_params[$paramName]) )
             return $this->_params[$paramName];
 
         return $defaultValue;

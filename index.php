@@ -17,8 +17,9 @@ error_reporting(E_ALL | E_NOTICE);
 
 ActiveRecord\Config::initialize(function($cfg) {
                     $cfg->set_model_directory('app/Models/');
-                    $cfg->set_connections(array('development' =>
-                        'mysql://root:@localhost/framesel'));
+                    $cfg->set_connections(array(
+                        'development' => 'mysql://root:@localhost/framesel'
+                    ));
                 });
 
 echo Front::getInstance()->run();

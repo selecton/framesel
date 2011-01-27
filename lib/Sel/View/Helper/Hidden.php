@@ -5,21 +5,20 @@ namespace Sel\View\Helper;
 use Sel\View\HelperAbstract;
 
 /**
- * TextInput
+ * Hidden
  *
  * @author Szymon Wygnański
  * @license http://creativecommons.org/licenses/by/3.0/pl/
  */
-class TextInput extends HelperAbstract
+class Hidden extends HelperAbstract
 {
 
-    public function direct($modelName, $fieldName, $placeholder = '')
+    public function direct($modelName, $fieldName)
     {
         $view = $this->getView();
         $out = '<input id="' . $modelName . '-' . $fieldName . '"'
-                . 'name="' . $modelName . '[' . $fieldName . ']'
-                .'" type="text" placeholder="'
-                . $placeholder . '"';
+            . 'name="' . $modelName . '[' . $fieldName . ']"'
+            . 'type="hidden"';
 
         if( isset($view->$modelName) && isset($view->$modelName->$fieldName) )
         {

@@ -43,7 +43,25 @@ class PostsController extends AbstractController
             throw new Sel\Exception('Akcja tylko dla zapytań post', 404);
         }
 
-        $blogPost = new Post( $this->getRequest()->getPost() );
+        $data = $this->getParam('post', array());
+
+        try {
+
+        }
+        catch (RecordNotFound $e) {
+
+        }
+
+        if( !Post::exists($data['id']) )
+        {
+            $blogPost = new Post();
+        }
+        else
+        {
+            $blogPost = Post::find($data['id']);
+        }
+
+        $blogPost = new Post( $this->getParam('post') );
 
         try
         {
