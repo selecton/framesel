@@ -126,4 +126,3 @@ class OciAdapter extends Connection
 		// is handled in the constructor
 	}
 };
-?>

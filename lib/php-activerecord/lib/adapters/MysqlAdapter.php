@@ -78,4 +78,3 @@ class MysqlAdapter extends Connection
 
 	public function accepts_limit_and_order_for_update_and_delete() { return true; }
 }
-?>

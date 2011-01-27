@@ -52,4 +52,3 @@ class Cache
 		return $value;
 	}
 }
-?>

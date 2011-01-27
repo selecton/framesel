@@ -44,7 +44,6 @@ class PostsController extends AbstractController
         }
 
         $data = $this->getParam('post');
-
         $blogPost = Post::find_or_create_by_id($data['id']);
 
         if( $blogPost->update_attributes($data) )

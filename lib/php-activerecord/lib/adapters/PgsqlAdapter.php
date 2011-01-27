@@ -105,5 +105,4 @@ SQL;
 	{
 		$this->query("SET NAMES '$charset'");
 	}
-};
-?>
+}
