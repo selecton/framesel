@@ -905,5 +905,4 @@ class Errors implements IteratorAggregate
 	{
 		return new ArrayIterator($this->full_messages());
 	}
-};
-?>
+}

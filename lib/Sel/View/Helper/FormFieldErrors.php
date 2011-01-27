@@ -35,13 +35,22 @@ class FormFieldErrors extends HelperAbstract
             return '';
         }
 
-        if(  $view->$modelName->is_valid($fieldName) )
+        if(  $view->$modelName->is_valid() )
         {
             return '';
         }
 
+        if( ! $view->$modelName->errors->is_invalid($fieldName) )
+        {
+            return '';
+        }
+
+        $errors = $view->$modelName->errors->on($fieldName);
+        $errors = \is_array($errors) ? $errors : array($errors);
+
         $out = '<ul>' . "\n";
-        foreach($view->$modelName->errors->on($fieldName) as $error)
+
+        foreach($errors as $error)
         {
             $out .= '<li>' . $error . '</li>' . "\n";
         }

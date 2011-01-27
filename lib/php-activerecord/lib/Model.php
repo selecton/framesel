@@ -1850,5 +1850,4 @@ class Model
 		}
 		return true;
 	}
-};
-?>
+}

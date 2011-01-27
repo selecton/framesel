@@ -43,41 +43,20 @@ class PostsController extends AbstractController
             throw new Sel\Exception('Akcja tylko dla zapytań post', 404);
         }
 
-        $data = $this->getParam('post', array());
+        $data = $this->getParam('post');
 
-        try {
+        $blogPost = Post::find_or_create_by_id($data['id']);
 
-        }
-        catch (RecordNotFound $e) {
-
-        }
-
-        if( !Post::exists($data['id']) )
+        if( $blogPost->update_attributes($data) )
         {
-            $blogPost = new Post();
+            $this->_redirect('index');
         }
         else
         {
-            $blogPost = Post::find($data['id']);
-        }
-
-        $blogPost = new Post( $this->getParam('post') );
-
-        try
-        {
-            if( $blogPost->is_invalid() )
-            {
-                throw new ModelInvalid('Wypełnij poprawnie formularz');
-            }
-
-            $blogPost->save();
-            $this->_redirect('index');
-        }
-        catch (ModelInvalid $e )
-        {
-            $this->view->post = $blogPost;
+            $this->_view->post = $blogPost;
             $this->render('edit');
         }
+        
         
     }
 }
