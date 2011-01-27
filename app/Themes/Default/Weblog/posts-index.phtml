@@ -1,0 +1,10 @@
+<h3>Posts</h3>
+
+<?php foreach($this->posts as $p): ?>
+<div>
+    <h4><?php echo $p->title; ?></h4>
+    <p>
+        <?php echo $p->body; ?>
+    </p>
+</div>
+<?php endforeach; ?>
