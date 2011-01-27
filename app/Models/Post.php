@@ -1,5 +1,7 @@
 <?php
+
 namespace Models;
+
 use ActiveRecord\Model;
 
 /**
@@ -8,10 +10,9 @@ use ActiveRecord\Model;
  * @author Szymon Wygnański
  * @license http://creativecommons.org/licenses/by/3.0/pl/
  */
-class Post extends Model
-{
+class Post extends Model {
 
-    static $validates_presence_of = array(
+    static public $validates_presence_of = array(
         array('title')
     );
 

@@ -40,10 +40,18 @@ class Action
         
     }
 
+    public function goBack()
+    {
+        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        header('Location: ' . $referer);
+        exit;
+    }
+
     protected function _redirect($action, $controller = null, $module = null, $params = array())
     {
-        $module = $module == null ? $this->getRequest()->getModuleName() : $module;
-        $controller = $controller == null ? $this->getRequest()->getControllerName() : $controller;
+        $request = $this->getRequest();
+        $module = $module == null ? $request->getModuleName() : $module;
+        $controller = $controller == null ? $request->getControllerName() : $controller;
 
         if( $module == 'default' )
             $module = '';
@@ -64,7 +72,7 @@ class Action
             $paramsString .= '/' . $key . '/' . $val;
         }
 
-        header('Location: /?' . $module . $controller . $action . $paramsString);
+        header('Location: ' . $request->domain() . '/?' . $module . $controller . $action . $paramsString);
         exit;
     }
 

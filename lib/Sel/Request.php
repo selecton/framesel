@@ -1,4 +1,5 @@
 <?php
+
 namespace Sel;
 
 /**
@@ -7,34 +8,30 @@ namespace Sel;
  * @author Szymon Wygnański
  * @license http://creativecommons.org/licenses/by/3.0/pl/
  */
-class Request
-{
+class Request {
 
     /**
      *
      * @var String
      */
     private $_controllerName;
-
     /**
      *
      * @var String
      */
     private $_moduleName;
-
     /**
      *
      * @var String
      */
     private $_actionName;
-
     /**
      *
      * @var array
      */
     private $_params;
 
-    public function  __construct() {
+    public function __construct() {
         $action = array_pop(array_keys($_GET));
         $exploded = explode('/', $action);
 
@@ -45,29 +42,35 @@ class Request
         $params = \array_slice($exploded, 3);
 
         $this->_params = array();
-        
-        for($i = 0; $i < count($params); $i++)
-        {
-            if( $i%2 == 0 )
+
+        for ($i = 0; $i < count($params); $i++) {
+            if ($i % 2 == 0)
                 $key = $params[$i];
             else
                 $this->_params[$key] = $params[$i];
         }
 
         $this->_params = \array_merge($this->_params, $_POST);
-        
     }
 
-    public function getParam($paramName, $defaultValue = null)
-    {
-        if( isset($this->_params[$paramName]) && !empty($this->_params[$paramName]) )
+    /**
+     *
+     * @param String $paramName
+     * @param mixed $defaultValue
+     * @return mixed
+     */
+    public function getParam($paramName, $defaultValue = null) {
+        if (isset($this->_params[$paramName]) && !empty($this->_params[$paramName]))
             return $this->_params[$paramName];
 
         return $defaultValue;
     }
 
-    public function getPost()
-    {
+    /**
+     *
+     * @return array
+     */
+    public function getPost() {
         return \is_array($_POST) ? $_POST : array();
     }
 
@@ -75,17 +78,38 @@ class Request
      *
      * @return Boolean
      */
-    public function isPost()
+    public function isPost() {
+        return!empty($_POST);
+    }
+
+    public function currentURL()
     {
-        return !empty($_POST);
+         return $this->domain() . $_SERVER["REQUEST_URI"];
     }
 
     /**
      *
      * @return String
      */
-    public function getModuleName()
-    {
+    public function domain() {
+        $pageURL = 'http';
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+            $pageURL .= "s";
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"];
+        }
+        return $pageURL;
+    }
+
+    /**
+     *
+     * @return String
+     */
+    public function getModuleName() {
         return $this->_moduleName;
     }
 
@@ -93,8 +117,7 @@ class Request
      *
      * @return String
      */
-    public function getControllerName()
-    {
+    public function getControllerName() {
         return $this->_controllerName;
     }
 
@@ -102,8 +125,7 @@ class Request
      *
      * @return String
      */
-    public function getActionName()
-    {
+    public function getActionName() {
         return $this->_actionName;
     }
 

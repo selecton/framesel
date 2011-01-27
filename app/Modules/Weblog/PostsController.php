@@ -1,7 +1,8 @@
 <?php
 namespace Modules\Weblog;
-use Modules\Weblog\AbstractController;
+
 use Models\Post;
+use Sel\Controller\Action;
 use ActiveRecord\RecordNotFound;
 use Sel\Exception\PageNotFound;
 use Sel\Exception\ModelInvalid;
@@ -12,7 +13,7 @@ use Sel\Exception\ModelInvalid;
  * @author Szymon Wygnański
  * @license http://creativecommons.org/licenses/by/3.0/pl/
  */
-class PostsController extends AbstractController
+class PostsController extends Action
 {
     public function indexAction()
     {
@@ -55,7 +56,15 @@ class PostsController extends AbstractController
             $this->_view->post = $blogPost;
             $this->render('edit');
         }
-        
-        
     }
+
+    public function removeAction()
+    {
+        if( 0 == Post::delete_all(array('conditions' => array('id' => $this->getParam('id', 0)))) )
+        {
+            throw new PageNotFound('Nie można usunąć rekordu o podanym id');
+        }
+        $this->goBack();
+    }
+    
 }
