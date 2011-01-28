@@ -12,15 +12,15 @@ use Sel\View\HelperAbstract;
 class Textarea extends HelperAbstract
 {
 
-    public function direct($modelName, $fieldName)
+    public function direct($model_name, $field_name)
     {
-        $view = $this->getView();
-        $out = '<textarea id="' . $modelName . '-' . $fieldName . '"'
-        . 'name="' . $modelName . '[' . $fieldName . ']">';
+        $view = $this->get_view();
+        $out = '<textarea id="' . $model_name . '-' . $field_name . '"'
+        . 'name="' . $model_name . '[' . $field_name . ']">';
 
-        if( isset($view->$modelName) && isset($view->$modelName->$fieldName) )
+        if( isset($view->$model_name) && isset($view->$model_name->$field_name) )
         {
-            $out .= $view->$modelName->$fieldName;
+            $out .= $view->$model_name->$field_name;
         }
         $out .= '</textarea>';
 

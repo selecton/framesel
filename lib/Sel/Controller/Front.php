@@ -15,37 +15,37 @@ class Front
      *
      * @var Sel\Request
      */
-    private $_request;
+    private $request;
 
     /**
      *
      * @var Sel\Controller\Front
      */
-    static private $_instance;
+    static private $instance;
+
+    protected function  __construct()
+    {
+        $this->request = new Request();
+    }
 
     /**
      *
      * @return Sel\Controller\Front
      */
-    static public function getInstance()
+    static public function instance()
     {
-        if (self::$_instance == null)
-            self::$_instance = new Front();
-        return self::$_instance;
-    }
-
-    private function  __construct()
-    {
-        $this->_request = new Request();
+        if( self::$instance === null )
+            self::$instance = new Front();
+        return self::$instance;
     }
 
     /**
      *
      * @return Sel\Request
      */
-    public function getRequest()
+    public function get_request()
     {
-        return $this->_request;
+        return $this->request;
     }
 
     /**
@@ -54,16 +54,16 @@ class Front
      */
     public function run()
     {
-        $fullControllerName = 'Modules\\'
-                . ucfirst($this->_request->getModuleName()) . '\\'
-                . ucfirst($this->_request->getControllerName()) . 'Controller';
+        $full_controller_name = 'Modules\\'
+                . ucfirst($this->request->get_module_name()) . '\\'
+                . ucfirst($this->request->get_controller_name()) . 'Controller';
 
-        $fullActionName = $this->_request->getActionName() . 'Action';
-        $controller = new $fullControllerName();
+        $full_action_name = $this->request->get_action_name() . '_action';
+        $controller = new $full_controller_name();
 
-        $controller->$fullActionName();
+        $controller->$full_action_name();
 
-        return $controller->getView()->renderLayout();
+        return $controller->get_view()->render();
     }
 
 }

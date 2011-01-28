@@ -13,16 +13,16 @@ use Sel\View\HelperAbstract;
 class Hidden extends HelperAbstract
 {
 
-    public function direct($modelName, $fieldName)
+    public function direct($model_name, $field_name)
     {
-        $view = $this->getView();
-        $out = '<input id="' . $modelName . '-' . $fieldName . '"'
-            . 'name="' . $modelName . '[' . $fieldName . ']"'
+        $view = $this->get_view();
+        $out = '<input id="' . $model_name . '-' . $field_name . '"'
+            . 'name="' . $model_name . '[' . $field_name . ']"'
             . 'type="hidden"';
 
-        if( isset($view->$modelName) && isset($view->$modelName->$fieldName) )
+        if( isset($view->$model_name) && isset($view->$model_name->$field_name) )
         {
-            $out .= ' value="' . $view->$modelName->$fieldName .'"';
+            $out .= ' value="' . $view->$model_name->$field_name .'"';
         }
 
         $out .= '/>';

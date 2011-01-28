@@ -22,4 +22,4 @@ ActiveRecord\Config::initialize(function($cfg) {
                     ));
                 });
 
-echo Front::getInstance()->run();
+echo Front::instance()->run();

@@ -11,72 +11,76 @@ use Sel\Controller\Front;
 class View
 {
 
-    private $_theme;
+    /**
+     *
+     * @var String
+     */
+    private $theme;
 
     /**
      *
      * @var String
      */
-    private $_layoutScript;
+    private $script;
 
     /**
      *
      * @var String
      */
-    private $_moduleName;
+    private $module_name;
 
     /**
      *
      * @var String
      */
-    private $_controllerName;
+    private $controller_name;
 
     /**
      *
      * @var String
      */
-    private $_actionName;
+    private $action_name;
 
 
     public function __construct()
     {
-        $this->_theme = 'default';
-        $this->_layoutScript = 'Themes/' . ucfirst($this->_theme) . '/' . ucfirst($this->getModuleName()) . '/layout.phtml';
-    }
-
-     /**
-     *
-     * @param String $script
-     */
-    public function setLayoutScript($script)
-    {
-        $this->_layoutScript = $script;
+        $this->theme = 'default';
+        $this->script = ucfirst(Front::instance()->get_request()->get_module_name()) . '/layout.phtml';
     }
 
     /**
-     *
-     * @return String
+     * Path to the script that will gonna be rendered
+     * 
+     * @param String $script
      */
-    public function getLayoutScript()
+    public function set_script($script)
     {
-        return $this->_layoutScript;
-    }
-
-    public function renderLayout()
-    {
-        return $this->render($this->_layoutScript);
+        $this->script = $script;
     }
 
     /**
+     * Path to the script that will gona be rendered
      *
+     * @return String
+     */
+    public function get_script()
+    {
+        return $this->script;
+    }
+
+    /**
+     * renders the $this->script file
+     * 
      * @param String $script
      * @return String
      */
-    public function render($script)
+    public function render($script = null)
     {
+        $script = $script == null ? $this->script : $script;
+
         ob_start();
 
-        require $script;
+        require 'Themes/' . ucfirst($this->theme) . '/' . $script;
 
         $out = ob_get_contents();
         ob_get_clean();
@@ -84,89 +88,20 @@ class View
         return $out;
     }
 
-    public function content()
-    {
-        $request = Front::getInstance()->getRequest();
-        
-        return $this->render( 'Themes/'
-                . ucfirst($this->_theme) . '/'
-                . ucfirst( $this->getModuleName() ) .'/'
-                . $this->getControllerName() . '-' . $this->getActionName() . '.phtml');
-    }
-
     /**
+     *  Method for calling the helpers;
      *
-     * @param String $module
-     */
-    public function setModuleName($module)
-    {
-        $this->_moduleName = $module;
-    }
-
-    /**
-     *
+     * @param String $name
+     * @param array $arguments
      * @return String
      */
-    public function getModuleName()
-    {
-        if( $this->_moduleName == null )
-        {
-            return Front::getInstance()->getRequest()->getModuleName();
-        }
-        return $this->_moduleName;
-    }
-
-    /**
-     *
-     * @param String $controller
-     */
-    public function setControllerName($controller)
-    {
-        $this->_controllerName = $controller;
-    }
-
-    /**
-     *
-     * @return String
-     */
-    public function getControllerName()
-    {
-        if( $this->_controllerName == null )
-        {
-            return Front::getInstance()->getRequest()->getControllerName();
-        }
-        return $this->_controllerName;
-    }
-
-    /**
-     *
-     * @param String $action 
-     */
-    public function setActionName($action)
-    {
-        $this->_actionName = $action;
-    }
-
-    /**
-     *
-     * @return String
-     */
-    public function getActionName()
-    {
-        if( $this->_actionName == null )
-        {
-            return Front::getInstance()->getRequest()->getActionName();
-        }
-        return $this->_actionName;
-    }
-
     public function __call($name, $arguments)
     {
-        $fullHelperName = 'Sel\View\Helper\\' . \ucfirst($name);
+        $full_helper_name = 'Sel\View\Helper\\' . \ucfirst($name);
 
-        if( \class_exists($fullHelperName) )
+        if( \class_exists($full_helper_name) )
         {
-            $helper = new $fullHelperName($this);
+            $helper = new $full_helper_name($this);
 
             return \call_user_func_array(array($helper, 'direct'), $arguments);
         }

@@ -15,21 +15,21 @@ use Sel\Exception\ModelInvalid;
  */
 class PostsController extends Action
 {
-    public function indexAction()
+    public function index_action()
     {
-        $this->_view->posts = Post::all();
+        $this->view->posts = Post::all();
     }
 
-    public function addAction()
+    public function add_action()
     {
         $this->render('edit');
     }
 
-    public function editAction()
+    public function edit_action()
     {
         try
         {
-            $this->_view->post = Post::find($this->getParam('id', 0));
+            $this->view->post = Post::find($this->get_param('id', 0));
         }
         catch( RecordNotFound $e )
         {
@@ -37,34 +37,34 @@ class PostsController extends Action
         }   
     }
 
-    public function saveAction()
+    public function save_action()
     {
-        if( ! $this->getRequest()->isPost() )
+        if( ! $this->get_request()->is_post() )
         {
             throw new Sel\Exception('Akcja tylko dla zapytań post', 404);
         }
 
-        $data = $this->getParam('post');
-        $blogPost = Post::find_or_create_by_id($data['id']);
+        $data = $this->get_param('post');
+        $post = Post::find_or_create_by_id($data['id']);
 
-        if( $blogPost->update_attributes($data) )
+        if( $post->update_attributes($data) )
         {
-            $this->_redirect('index');
+            $this->redirect('index');
         }
         else
         {
-            $this->_view->post = $blogPost;
+            $this->view->post = $post;
             $this->render('edit');
         }
     }
 
-    public function removeAction()
+    public function remove_action()
     {
-        if( 0 == Post::delete_all(array('conditions' => array('id' => $this->getParam('id', 0)))) )
+        if( 0 == Post::delete_all(array('conditions' => array('id' => $this->get_param('id', 0)))) )
         {
             throw new PageNotFound('Nie można usunąć rekordu o podanym id');
         }
-        $this->goBack();
+        $this->go_back();
     }
     
 }

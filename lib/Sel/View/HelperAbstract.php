@@ -16,20 +16,20 @@ abstract class HelperAbstract
      *
      * @var Sel\View
      */
-    private $_view;
+    private $view;
 
     public function __construct(View $view)
     {
-        $this->_view = $view;
+        $this->view = $view;
     }
 
     /**
      *
      * @return Sel\View
      */
-    public function getView()
+    public function get_view()
     {
-        return $this->_view;
+        return $this->view;
     }
 
     public function direct()

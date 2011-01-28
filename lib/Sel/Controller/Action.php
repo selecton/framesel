@@ -4,6 +4,7 @@ namespace Sel\Controller;
 use Sel\View;
 use Sel\Request;
 use Sel\Controller\Front;
+use Sel\View\Helper\Content;
 
 /**
  * Action
@@ -14,44 +15,48 @@ use Sel\Controller\Front;
 class Action
 {
 
-    
-
     /**
      *
      * @var Sel\View
      */
-    protected $_view;
+    protected $view;
     
     public function __construct()
     {
-        $this->_view = new View();
-        $moduleName = Front::getInstance()->getRequest()->getModuleName();
-
-        
-
-        $this->_init();
+        $this->view = new View();
+        $this->init();
     }
 
     /**
      * Override this method
      */
-    protected function _init()
+    protected function init()
     {
         
     }
 
-    public function goBack()
+    /**
+     * changing location to $_SERVER['HTTP_REFERER']
+     */
+    public function go_back()
     {
         $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         header('Location: ' . $referer);
         exit;
     }
 
-    protected function _redirect($action, $controller = null, $module = null, $params = array())
+    /**
+     *
+     * @param String $action
+     * @param String $controller
+     * @param String $module
+     * @param array $params
+     */
+    protected function redirect($action, $controller = null, $module = null, $params = array())
     {
-        $request = $this->getRequest();
-        $module = $module == null ? $request->getModuleName() : $module;
-        $controller = $controller == null ? $request->getControllerName() : $controller;
+        $request = $this->get_request();
+        $module = $module == null ? $request->get_module_name() : $module;
+        $controller = $controller == null ? $request->get_controller_name() : $controller;
 
         if( $module == 'default' )
             $module = '';
@@ -80,31 +85,38 @@ class Action
      *
      * @return Sel/Request
      */
-    public function getRequest()
+    public function get_request()
     {
-        return Front::getInstance()->getRequest();
+        return Front::instance()->get_request();
     }
 
-    public function getParam($paramName, $defaultValue = null)
+    /**
+     *
+     * @param String $paramName
+     * @param mixed $defaultValue
+     * @return mixed
+     */
+    public function get_param($paramName, $defaultValue = null)
     {
-        return Front::getInstance()->getRequest()->getParam($paramName, $defaultValue);
+        return $this->get_request()->get_param($paramName, $defaultValue);
     }
 
     public function render($action, $controller = null, $module = null)
     {
-        $this->_view->setActionName($action);
-        $this->_view->setControllerName($controller);
-        $this->_view->setModuleName($module);
+        $request = $this->get_request();
+        
+        Content::$module_name = $module == null ? $request->get_module_name() : $module;
+        Content::$controller_name = $controller == null ? $request->get_controller_name() : $controller;
+        Content::$action_name = $action;
     }
-
 
     /**
      *
      * @return Sel\View
      */
-    public function getView()
+    public function get_view()
     {
-        return $this->_view;
+        return $this->view;
     }
 
 }

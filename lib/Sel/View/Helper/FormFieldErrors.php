@@ -15,37 +15,37 @@ use Sel\Exception;
 class FormFieldErrors extends HelperAbstract
 {
 
-    public function direct($modelName, $fieldName)
+    public function direct($model_name, $field_name)
     {
-        $view = $this->getView();
+        $view = $this->get_view();
         $out = '';
 
-        if( !isset($view->$modelName) )
+        if( !isset($view->$model_name) )
         {
             return '';
         }
 
-        if( !($view->$modelName instanceof Model) )
+        if( !($view->$model_name instanceof Model) )
         {
             return '';
         }
 
-        if( !isset($view->$modelName->$fieldName) )
+        if( !isset($view->$model_name->$field_name) )
         {
             return '';
         }
 
-        if(  $view->$modelName->is_valid() )
+        if(  $view->$model_name->is_valid() )
         {
             return '';
         }
 
-        if( ! $view->$modelName->errors->is_invalid($fieldName) )
+        if( ! $view->$model_name->errors->is_invalid($field_name) )
         {
             return '';
         }
 
-        $errors = $view->$modelName->errors->on($fieldName);
+        $errors = $view->$model_name->errors->on($field_name);
         $errors = \is_array($errors) ? $errors : array($errors);
 
         $out = '<ul>' . "\n";

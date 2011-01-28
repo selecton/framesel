@@ -14,43 +14,43 @@ class Request {
      *
      * @var String
      */
-    private $_controllerName;
+    private $controller_name;
     /**
      *
      * @var String
      */
-    private $_moduleName;
+    private $module_name;
     /**
      *
      * @var String
      */
-    private $_actionName;
+    private $action_name;
     /**
      *
      * @var array
      */
-    private $_params;
+    private $params;
 
     public function __construct() {
         $action = array_pop(array_keys($_GET));
         $exploded = explode('/', $action);
 
-        $this->_moduleName = isset($exploded[0]) && !empty($exploded[0]) ? $exploded[0] : 'default';
-        $this->_controllerName = isset($exploded[1]) && !empty($exploded[1]) ? $exploded[1] : 'index';
-        $this->_actionName = isset($exploded[2]) && !empty($exploded[2]) ? $exploded[2] : 'index';
+        $this->module_name = isset($exploded[0]) && !empty($exploded[0]) ? $exploded[0] : 'default';
+        $this->controller_name = isset($exploded[1]) && !empty($exploded[1]) ? $exploded[1] : 'index';
+        $this->action_name = isset($exploded[2]) && !empty($exploded[2]) ? $exploded[2] : 'index';
 
         $params = \array_slice($exploded, 3);
 
-        $this->_params = array();
+        $this->params = array();
 
         for ($i = 0; $i < count($params); $i++) {
             if ($i % 2 == 0)
                 $key = $params[$i];
             else
-                $this->_params[$key] = $params[$i];
+                $this->params[$key] = $params[$i];
         }
 
-        $this->_params = \array_merge($this->_params, $_POST);
+        $this->params = \array_merge($this->params, $_POST);
     }
 
     /**
@@ -59,18 +59,18 @@ class Request {
      * @param mixed $defaultValue
      * @return mixed
      */
-    public function getParam($paramName, $defaultValue = null) {
-        if (isset($this->_params[$paramName]) && !empty($this->_params[$paramName]))
-            return $this->_params[$paramName];
+    public function get_param($param_name, $default_value = null) {
+        if (isset($this->params[$param_name]) && !empty($this->params[$param_name]))
+            return $this->params[$param_name];
 
-        return $defaultValue;
+        return $default_value;
     }
 
     /**
      *
      * @return array
      */
-    public function getPost() {
+    public function get_post() {
         return \is_array($_POST) ? $_POST : array();
     }
 
@@ -78,11 +78,11 @@ class Request {
      *
      * @return Boolean
      */
-    public function isPost() {
+    public function is_post() {
         return!empty($_POST);
     }
 
-    public function currentURL()
+    public function current_url()
     {
          return $this->domain() . $_SERVER["REQUEST_URI"];
     }
@@ -92,41 +92,41 @@ class Request {
      * @return String
      */
     public function domain() {
-        $pageURL = 'http';
+        $page_url = 'http';
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
-            $pageURL .= "s";
+            $page_url .= "s";
         }
-        $pageURL .= "://";
+        $page_url .= "://";
         if ($_SERVER["SERVER_PORT"] != "80") {
-            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"];
+            $page_url .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"];
         } else {
-            $pageURL .= $_SERVER["SERVER_NAME"];
+            $page_url .= $_SERVER["SERVER_NAME"];
         }
-        return $pageURL;
+        return $page_url;
     }
 
     /**
      *
      * @return String
      */
-    public function getModuleName() {
-        return $this->_moduleName;
+    public function get_module_name() {
+        return $this->module_name;
     }
 
     /**
      *
      * @return String
      */
-    public function getControllerName() {
-        return $this->_controllerName;
+    public function get_controller_name() {
+        return $this->controller_name;
     }
 
     /**
      *
      * @return String
      */
-    public function getActionName() {
-        return $this->_actionName;
+    public function get_action_name() {
+        return $this->action_name;
     }
 
 }
