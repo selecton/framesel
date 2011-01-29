@@ -1,0 +1,62 @@
+<div id="header">
+
+    <a href="<?php echo $this->url('multipla', 'index', 'index'); ?>"
+       title="Strona główna" id="header_logo">
+        <img src="<?php echo $this->themePath() . '/multipla/images/logo.jpg'; ?>"
+             alt="Strona główna"/>
+    </a>
+
+    <div id="header_user">
+        <a href="<?php echo $this->url('multipla', 'cart', 'index'); ?>"
+           title="Koszyk" id="header_cart">
+            <img src="<?php echo $this->themePath() . '/multipla/images/cart_mini.jpg'; ?>"
+                 alt="Koszyk" />
+        </a>
+
+        <a href="<?php echo $this->url('locale', 'index', 'change', array('language' => 'pl')); ?>"
+           title="Polski">PL</a>
+
+        <a href="<?php echo $this->url('locale', 'index', 'change', array('language' => 'en')); ?>"
+           title="Polski">EN</a>
+
+        <a href="<?php echo $this->url('multipla', 'users', 'add'); ?>"
+           title="Zarejestruj się">
+            Zarejestruj się
+        </a>
+
+        <a href="<?php echo $this->url('multipla', 'logins', 'login'); ?>"
+           title="Logowanie">
+            Logowanie
+        </a>
+    </div>
+
+    <?php echo $this->action('form', 'search'); ?>
+
+    <ul id="main_menu">
+        <li>
+            <a href="<?php echo $this->url('multipla', 'pages', 'show'); ?>"
+                title="Strona główna">Strona główna</a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url('multipla', 'pages', 'show'); ?>"
+               title="Czym jesyt multipla?">Czym jest multipla?</a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url('multipla', 'products', 'index'); ?>"
+               title="Produkty">Produkty</a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url('multipla', 'pages', 'show'); ?>"
+               title="Wymagania techniczne">Wymagania techniczne</a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url('multipla', 'pages', 'show'); ?>"
+               title="Pomoc">Pomoc</a>
+        </li>
+        <li id="player_activator">
+            <a href="<?php echo $this->url('multipla', 'player', 'index'); ?>"
+               title="Uruchom lekcję">Uruchom lekcję</a>
+        </li>
+    </ul>
+
+</div>

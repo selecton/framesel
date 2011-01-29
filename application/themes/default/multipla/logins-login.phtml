@@ -1,0 +1,17 @@
+<form action="<?php echo $this->url('multipla', 'logins', 'login'); ?>" method="post">
+    <fieldset>
+        <legend>Logowanie</legend>
+        <dl>
+            <dt><label for="login-email">E-mail</label></dt>
+            <dd>
+                <?php echo $this->textInput('login', 'email'); ?>
+                <?php echo $this->formFieldErrors('login', 'email'); ?>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="login-password">E-mail</label></dt>
+            <dd><input type="password" name="login[password]"/></dd>
+        </dl>
+        <input type="submit" value="Zaloguj" />
+    </fieldset>
+</form>

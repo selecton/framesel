@@ -1,0 +1,12 @@
+<form action="<?php echo $this->url('multipla', 'users', 'save'); ?>" method="post">
+    <fieldset>
+        <legend>Dane użytkownika</legend>
+        <dl>
+            <dt><label for="user-email">Email <sub>login</sub></label></dt>
+            <dd>
+                <?php echo $this->textInput('user', 'email'); ?>
+                <?php echo $this->formFieldErrors('user', 'email'); ?>
+            </dd>
+        </dl>
+    </fieldset>
+</form>
