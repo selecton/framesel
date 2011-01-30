@@ -18,7 +18,7 @@ class ShortenText extends HelperAbstract
         if( $length >= \strlen($text) )
             return $text;
 
-        while( $text[$length] != ' ' || $length == 0)
+        while( ($text[$length] != ' ' && $text[$length] != "\n") || $length == 0)
             $length--;
 
         return \substr($text, 0, $length) . '...';
