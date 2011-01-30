@@ -14,7 +14,6 @@ class ShortenText extends HelperAbstract
 
     public function direct($text, $length)
     {
-        
         if( $length >= \strlen($text) )
             return $text;
 
