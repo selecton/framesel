@@ -1,0 +1,46 @@
+Jak zacząć projekt?
+
+Najpierw należy utworzyć strukturę katalogów na przykład taką:
+/application
+/public
+/library
+
+Do library wrzucić framesel na przykład w ten sposób aby katalog Sel był w: /library/framesel
+
+Następnie należy dodać katalogi: br>
+
+/application/Modules
+/application/Models
+/application/themes
+
+następnie należy utworzyć plik index.php w /public o takiej treści:
+<?php
+
+set_include_path(
+        //get_include_path() . PATH_SEPARATOR .
+         '../library/'
+        . PATH_SEPARATOR . '../library/framesel'
+        . PATH_SEPARATOR . '../application/'
+);
+
+spl_autoload_extensions('.php');
+spl_autoload_register();
+
+use Sel\Controller\Front;
+
+require_once 'php-activerecord/ActiveRecord.php';
+
+error_reporting(E_ALL | E_NOTICE | E_STRICT);
+
+ActiveRecord\Config::initialize(function($cfg) {
+                    $cfg->set_model_directory('../application/Models/');
+                    $cfg->set_connections(array(
+                        'development' => 'mysql://root:@localhost/framesel'
+                    ));
+                });
+
+echo Front::instance()->run();
+
+
+katalog Document_Root to /public.
+No i powinno wszystko działać. Możemy tworzyć moduły.
