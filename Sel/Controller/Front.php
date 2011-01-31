@@ -76,13 +76,18 @@ class Front
         $controllerObj->$full_action_name();
 
         $view = $controllerObj->get_view();
-        if( !$this->first_run )
+        
+        if( $this->first_run )
         {
-            $view->set_script(\lcfirst($module) . '/' . lcfirst($controller) . '-' . lcfirst($action) . '.phtml');
+            $this->first_run = false;
+            return $view->render();
+        }
+        else
+        {
+            return $view->content();
         }
 
-        $this->first_run = false;
-        return $view->render();
+        
     }
 
 }

@@ -29,7 +29,7 @@ class Action
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->view = new View();
+        $this->view = new View($this);
         $this->init();
     }
 
@@ -108,9 +108,10 @@ class Action
 
     public function render($action, $controller = null, $module = null)
     {
-        Content::$module_name = $module == null ? $this->request->get_module_name() : $module;
-        Content::$controller_name = $controller == null ? $this->request->get_controller_name() : $controller;
-        Content::$action_name = $action;
+        $controller = $controller == null ? $this->request->get_controller_name() : $controller;
+        $module = $module == null ? $this->request->get_module_name() : $module;
+
+        $this->view->content_script = $module . '/' . $controller . '-' . $action . '.phtml';
     }
 
     /**

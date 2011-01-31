@@ -1,6 +1,6 @@
 <?php
 namespace Sel;
-use Sel\Controller\Front;
+use Sel\Controller\Action;
 
 /**
  * View
@@ -42,10 +42,27 @@ class View
     private $action_name;
 
 
-    public function __construct()
+    /**
+     *
+     * @var Sel\Controller\Action
+     */
+    private $controller;
+
+
+    public function __construct(Action $controller)
     {
+        $this->controller = $controller;
         $this->theme = 'default';
-        $this->script = lcfirst(Front::instance()->get_request()->get_module_name()) . '/layout.phtml';
+        $this->script = lcfirst($controller->get_request()->get_module_name()) . '/layout.phtml';
+    }
+
+    /**
+     *
+     * @return Sel\Controller\Action
+     */
+    public function get_controller()
+    {
+        return $this->controller;
     }
 
 

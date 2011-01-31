@@ -15,7 +15,7 @@ class Partial extends HelperAbstract
 
     public function direct($script, $params = array())
     {
-        $view = new View();
+        $view = new View($this->get_view()->get_controller());
         foreach($params as $key=>$val)
         {
             $view->$key = $val;
